@@ -9,8 +9,8 @@ services:
     # port 8000 is only exposed internally, to other Docker services.
     expose: 
       - 8000
-    # ports:
-    #   - 8000:8000
+    volumes: 
+      - static_volume:/home/app/web/staticfiles
     env_file:
       - ./.env.prod
     depends_on:
@@ -23,6 +23,8 @@ services:
       - ./.env.prod.db
   nginx:
     build: ./nginx
+    volumes: 
+      - static_volume:/home/app/web/staticfiles
     ports:
       - 1337:80
     depends_on: 
@@ -30,3 +32,4 @@ services:
 
 volumes:
   postgres_data:
+  static_volume:
